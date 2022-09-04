@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
 import '../screens/product_detail_screen.dart';
+import '../providers/cart.dart';
 
 class ProductItem extends StatelessWidget {
   //**== закоментировали потому как получаем все через провайдер */
@@ -22,6 +23,11 @@ class ProductItem extends StatelessWidget {
     //слушатель подключим на конкретный виджет избранное
     //обернув его в Consumer
     final product = Provider.of<Product>(
+      context,
+      listen: false,
+    );
+
+    final cart = Provider.of<Cart>(
       context,
       listen: false,
     );
@@ -57,7 +63,9 @@ class ProductItem extends StatelessWidget {
           //добавляем иконку-кнопку корзина
           trailing: IconButton(
             icon: const Icon(Icons.shopping_cart),
-            onPressed: () {},
+            onPressed: () {
+              cart.addItem(product.id, product.price, product.title);
+            },
           ),
         ),
         //оборачиваем картинку в кнопку
