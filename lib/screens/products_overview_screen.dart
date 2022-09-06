@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 // import '../widgets/product_item.dart';
 import '../widgets/product_grid.dart';
 import '../providers/products.dart';
+import '../widgets/badge.dart';
 
 enum FilterOptions {
   favorite,
@@ -52,7 +53,8 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                 value: FilterOptions.all,
               ),
             ],
-          )
+          ),
+          Consumer(child: Badge(child: IconButton(icon: Icon(Icons.shopping_cart,),), value: ...))
         ],
       ),
       //создаем генератор сетки
