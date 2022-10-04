@@ -17,7 +17,7 @@ class CartItem {
 }
 
 class Cart with ChangeNotifier {
-  late Map<String, CartItem> _items;
+  Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items {
     return {..._items};
@@ -25,6 +25,15 @@ class Cart with ChangeNotifier {
 
   int get itemCount {
     return _items.length;
+  }
+
+  //расчет суммы
+  double get totalAmount {
+    var total = 0.0;
+    _items.forEach((key, cartItem) {
+      total += cartItem.price * cartItem.quantity;
+    });
+    return total;
   }
 
   void addItem(
@@ -47,12 +56,14 @@ class Cart with ChangeNotifier {
     } else {
       //добавляем товар
       _items.putIfAbsent(
-          productId,
-          () => CartItem(
-              id: DateTime.now().toString(),
-              title: title,
-              quantity: 1,
-              price: price));
+        productId,
+        () => CartItem(
+            id: DateTime.now().toString(),
+            title: title,
+            quantity: 1,
+            price: price),
+      );
     }
+    notifyListeners();
   }
 }

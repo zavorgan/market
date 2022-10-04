@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:market/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 
 // import '../models/product.dart';
@@ -6,6 +7,8 @@ import 'package:provider/provider.dart';
 import '../widgets/product_grid.dart';
 import '../providers/products.dart';
 import '../widgets/badge.dart';
+import '../providers/cart.dart';
+import 'cart_screen.dart';
 
 enum FilterOptions {
   favorite,
@@ -13,10 +16,10 @@ enum FilterOptions {
 }
 
 class ProductsOverviewScreen extends StatefulWidget {
-  const ProductsOverviewScreen({Key? key}) : super(key: key);
+  // const ProductsOverviewScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
+  _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
 }
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
@@ -54,7 +57,20 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               ),
             ],
           ),
-          Consumer(child: Badge(child: IconButton(icon: Icon(Icons.shopping_cart,),), value: ...))
+          Consumer<Cart>(
+            builder: (_, cart, ch) => Badge(
+              value: cart.itemCount.toString(),
+              child: ch!, //виджет не может быть null поэтому !
+            ),
+            child: IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+            ),
+          )
         ],
       ),
       //создаем генератор сетки

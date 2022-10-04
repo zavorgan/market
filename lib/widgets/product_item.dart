@@ -63,6 +63,7 @@ class ProductItem extends StatelessWidget {
           //добавляем иконку-кнопку корзина
           trailing: IconButton(
             icon: const Icon(Icons.shopping_cart),
+            //передаем данные из товара в корзину
             onPressed: () {
               cart.addItem(product.id, product.price, product.title);
             },
